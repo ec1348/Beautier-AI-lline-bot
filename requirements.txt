@@ -1,0 +1,6 @@
+flask
+flask_cors
+line-bot-sdk
+python-dotenv
+google-cloud-logging
+gunicorn
