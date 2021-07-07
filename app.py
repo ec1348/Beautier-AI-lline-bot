@@ -28,7 +28,8 @@ import logging
 import google.cloud.logging
 from google.cloud.logging.handlers import CloudLoggingHandler
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config.get('GOOGLE_APPLICATION_CREDENTIALS')
+# 本地端用金鑰環境設置
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config.get('GOOGLE_APPLICATION_CREDENTIALS')
 
 client = google.cloud.logging.Client()
 
@@ -37,34 +38,14 @@ bot_event_logger = logging.getLogger("beautier_bot_log")
 bot_event_logger.setLevel(logging.INFO)
 bot_event_logger.addHandler(bot_event_handler)
 
+# 上傳圖文選單
 # from linebot.models.rich_menu import (
 #     RichMenu, RichMenuSize,RichMenuArea, RichMenuBounds
 #     )
 # from linebot.models.actions import(
 #     CameraRollAction, CameraAction
 # )
-# import urllib.request
-# from PIL import Image
-# import numpy as np
-# rich_menu_to_create = RichMenu(
-#     size=RichMenuSize(width=2500, height=843),
-#     selected=False,
-#     name="Nice richmenu",
-#     chat_bar_text="Tap here",
-#     areas=[RichMenuArea(
-#         bounds=RichMenuBounds(x=0, y=0, width=2500, height=843),
-#         action=CameraAction(type = "Camera", label = "Camera"))]
-# )
-# rich_menu_id = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
-# print(rich_menu_id)
 
-# urllib.request.urlretrieve(
-#   'https://storage.googleapis.com/beautier-life-rich-menu/%E5%9C%96%E6%96%87%E9%81%B8%E5%96%AE_v1.png',
-#    "richimage.png")
-# img = Image.open("richimage.png")
-# img = np.array(img)
-# line_bot_api.set_rich_menu_image(rich_menu_id, content_type="image/png",content = img.all())
-# line_bot_api.set_default_rich_menu(rich_menu_id)
 
 @app.route("/")
 def helloWorld():
