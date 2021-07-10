@@ -23,6 +23,14 @@ from linebot.exceptions import (
 line_bot_api = LineBotApi(config.get('LINE_CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(config.get('LINE_CHANNEL_SECRET'))
 
+#載入controllers
+from controllers.line_bot_controller import LineBotController
+
+# 載入Follow事件
+from linebot.models.events import (
+    FollowEvent,UnfollowEvent,MessageEvent,TextMessage,PostbackEvent,ImageMessage,AudioMessage,VideoMessage
+)
+
 # 建立日誌設定檔 log 
 import logging
 import google.cloud.logging
@@ -73,6 +81,9 @@ def callback():
 
     return 'OK'
 
+@handler.add(FollowEvent)
+def handle_line_follow(event):
+    return LineBotController.follow_event(event)
 
 
 
