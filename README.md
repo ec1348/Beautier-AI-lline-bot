@@ -6,7 +6,7 @@ This is a line bot make people more beautiful
 案授權
 
 第二步: 更改操作路徑
-先執行 "cd Beautier-AI-lline-bot"
+先執行 "cd Beautier-AI-lline-bot"\
 在執行 "gcloud config set project beautier-life-319105"
 這個步驟需要我開放 IAM 授權，要將你的E-mail寄給我開放授權
 
