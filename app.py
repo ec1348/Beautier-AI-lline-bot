@@ -46,13 +46,6 @@ bot_event_logger = logging.getLogger("beautier_bot_log")
 bot_event_logger.setLevel(logging.INFO)
 bot_event_logger.addHandler(bot_event_handler)
 
-# 上傳圖文選單
-# from linebot.models.rich_menu import (
-#     RichMenu, RichMenuSize,RichMenuArea, RichMenuBounds
-#     )
-# from linebot.models.actions import(
-#     CameraRollAction, CameraAction
-# )
 
 
 @app.route("/")
