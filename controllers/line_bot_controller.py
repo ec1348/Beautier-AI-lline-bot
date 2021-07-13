@@ -15,8 +15,6 @@ from linebot.models.events import (
 )
 from services.image_service import ImageService
 from services.user_service import UserService
-from services.video_service import VideoService
-from services.audio_service import AudioService
 
 from urllib.parse import parse_qs
 
@@ -44,17 +42,6 @@ class LineBotController:
     @classmethod
     def handle_image_message(cls, event):
         ImageService.line_user_upload_image(event)
-        return "OK"
-
-    # 用戶收到照片時的處理辦法
-    @classmethod
-    def handle_video_message(cls, event):
-        VideoService.line_user_upload_video(event)
-        return "OK"
-
-    @classmethod
-    def handle_audio_message(cls, event):
-        AudioService.line_user_upload_video(event)
         return "OK"
 
     # 擷取event的data欄位，並依照function_name，丟入不同的方法

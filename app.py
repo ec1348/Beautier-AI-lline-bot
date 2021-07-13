@@ -78,7 +78,17 @@ def callback():
 def handle_line_follow(event):
     return LineBotController.follow_event(event)
 
+@handler.add(UnfollowEvent)
+def handle_line_unfollow(event):
+    return LineBotController.unfollow_event(event)
 
+@handler.add(MessageEvent,TextMessage)
+def handle_line_text(event):
+    return LineBotController.handle_text_message(event)
+
+@handler.add(MessageEvent,ImageMessage)
+def handle_line_image(event):
+    return LineBotController.handle_image_message(event)
 
 
 if __name__ == "__main__":
