@@ -12,7 +12,7 @@ from linebot import (
 import os
 from daos.user_dao import UserDAO
 from linebot.models import (
-    TextSendMessage
+    TextSendMessage, ImageSendMessage
 )
 
 
@@ -53,13 +53,30 @@ class ImageService:
         blob.upload_from_filename(temp_file_path)
 
 
-        # 載入 GAN model
+        # run GAN model
+        # os.system("pwd")
+        os.system(f"python3 PSGAN-master/main.py --source_path {event.message.id}.png")
+
+        # 儲存套完GAN model的照片到bucket
+        temp_gan_file_path = f'{event.message.id}_psgan.png'
+        destination_blob_name_gan = f'{event.source.user_id}/image/{event.message.id}_psgan.png'
+        blob = bucket.blob(destination_blob_name_gan)
+        blob.upload_from_filename(temp_gan_file_path)
+
+        # 上傳至Imgur
+        import pyimgur
+        title = "Uploaded with PyImgur"
+        im = pyimgur.Imgur(config.get('IMGUR_CLIENT_ID'))
+        uploaded_image = im.upload_image(temp_gan_file_path, title=title)
 
 
         # 回覆變妝後的照片
         cls.line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(f"""圖片已上傳""")
-        )
+            ImageSendMessage(
+                original_content_url= uploaded_image.link, 
+                preview_image_url= uploaded_image.link)
+        )        
         # 移除本地照片
         os.remove(temp_file_path)
+        os.remove(temp_gan_file_path)
