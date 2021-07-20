@@ -69,14 +69,18 @@ class ImageService:
         im = pyimgur.Imgur(config.get('IMGUR_CLIENT_ID'))
         uploaded_image = im.upload_image(temp_gan_file_path, title=title)
 
+        try:
+            # 回覆變妝後的照片
+            cls.line_bot_api.reply_message(
+                event.reply_token,
+                ImageSendMessage(
+                    original_content_url= uploaded_image.link, 
+                    preview_image_url= uploaded_image.link)
+            )
+        except:
+            os.remove(temp_file_path)
+            os.remove(temp_gan_file_path)
 
-        # 回覆變妝後的照片
-        cls.line_bot_api.reply_message(
-            event.reply_token,
-            ImageSendMessage(
-                original_content_url= uploaded_image.link, 
-                preview_image_url= uploaded_image.link)
-        )        
         # 移除本地照片
         os.remove(temp_file_path)
         os.remove(temp_gan_file_path)
