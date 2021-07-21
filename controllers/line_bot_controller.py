@@ -15,6 +15,7 @@ from linebot.models.events import (
 )
 from services.image_service import ImageService
 from services.user_service import UserService
+from services.gan_service import GanService
 
 from urllib.parse import parse_qs
 
@@ -50,11 +51,10 @@ class LineBotController:
 
         # query string 拆解 event.postback.data
         query_string_dict = parse_qs(event.postback.data)
-
         # 擷取功能
-        detect_function_name = query_string_dict.get('function_name')[0]
+        detect_function_name = query_string_dict.get('style')[0]
 
         # Postbakc function 功能對應轉發
+        GanService.line_user_choose_style(event, detect_function_name)
 
-
-        return 'no'
+        return 'ok'

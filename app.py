@@ -90,6 +90,9 @@ def handle_line_text(event):
 def handle_line_image(event):
     return LineBotController.handle_image_message(event)
 
+@handler.add(PostbackEvent)
+def handle_postback_event(event):
+    return LineBotController.handle_postback_event(event)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

@@ -4,7 +4,6 @@
 '''
 
 from models.user import User
-from flask import Request
 from linebot import (
     LineBotApi
 )
@@ -12,12 +11,11 @@ from linebot import (
 import os
 from daos.user_dao import UserDAO
 from linebot.models import (
-    TextSendMessage, ImageSendMessage
+    TextSendMessage
 )
 
 
 # 圖片下載與上傳專用
-import urllib.request
 from google.cloud import storage
 
 
@@ -39,7 +37,7 @@ class ImageService:
         image_blob = cls.line_bot_api.get_message_content(event.message.id)
         temp_file_path=f"""{event.message.id}.png"""
 
-        #
+        #將照片存雲端(雲端使用)
         with open(temp_file_path, 'wb') as fd:
             for chunk in image_blob.iter_content():
                 fd.write(chunk)
@@ -52,35 +50,14 @@ class ImageService:
         blob = bucket.blob(destination_blob_name)
         blob.upload_from_filename(temp_file_path)
 
+        # 將檔名轉成userid準備給gan model 作為使用
+        os.rename(f"""{event.message.id}.png""",f'{event.source.user_id}_cache.png')
 
-        # run GAN model
-        # os.system("pwd")
-        os.system(f"python3 PSGAN-master/main.py --source_path {event.message.id}.png")
-
-        # 儲存套完GAN model的照片到bucket
-        temp_gan_file_path = f'{event.message.id}_psgan.png'
-        destination_blob_name_gan = f'{event.source.user_id}/image/{event.message.id}_psgan.png'
-        blob = bucket.blob(destination_blob_name_gan)
-        blob.upload_from_filename(temp_gan_file_path)
-
-        # 上傳至Imgur
-        import pyimgur
-        title = "Uploaded with PyImgur"
-        im = pyimgur.Imgur(config.get('IMGUR_CLIENT_ID'))
-        uploaded_image = im.upload_image(temp_gan_file_path, title=title)
-
-        try:
-            # 回覆變妝後的照片
-            cls.line_bot_api.reply_message(
+        cls.line_bot_api.reply_message(
                 event.reply_token,
-                ImageSendMessage(
-                    original_content_url= uploaded_image.link, 
-                    preview_image_url= uploaded_image.link)
+                TextSendMessage("圖片準備變妝，請進行風格選擇!")
             )
-        except:
-            os.remove(temp_file_path)
-            os.remove(temp_gan_file_path)
 
-        # 移除本地照片
-        os.remove(temp_file_path)
-        os.remove(temp_gan_file_path)
+        # 五分鐘後移除本地照片
+        # os.remove(temp_file_path)
+        # os.remove(temp_file_path_for_gan_service)

@@ -29,7 +29,7 @@ richmenu_1 = {
                     "action": {
                         "type": "postback",
                         "label": "sweet",
-                        "data": "style=sweet",
+                        "data": "style=nature",
                         "text": "甜美風格"
                     }
                 },
@@ -84,7 +84,7 @@ richmenu_1 = {
                     "action": {
                         "type": "postback",
                         "label": "club",
-                        "data": "style=club",
+                        "data": "style=wild",
                         "text": "夜店風"
                     }
                 },
