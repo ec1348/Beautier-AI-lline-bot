@@ -16,6 +16,7 @@ from linebot.models.events import (
 from services.image_service import ImageService
 from services.user_service import UserService
 from services.gan_service import GanService
+from services.rich_menu_service import richMenuService
 
 from urllib.parse import parse_qs
 
@@ -51,10 +52,18 @@ class LineBotController:
 
         # query string 拆解 event.postback.data
         query_string_dict = parse_qs(event.postback.data)
+        print(query_string_dict)
         # 擷取功能
-        detect_function_name = query_string_dict.get('style')[0]
-
-        # Postbakc function 功能對應轉發
-        GanService.line_user_choose_style(event, detect_function_name)
+        if query_string_dict.get('action'):
+            if query_string_dict.get('action')[0] == 'next':
+                print("dam same")
+                richMenuService.click_next(event)
+            else:
+                print("go back")                
+                richMenuService.click_prev(event)
+        elif query_string_dict.get('style'):
+            style = query_string_dict.get('style')[0]
+            # Postbakc function 功能對應轉發
+            GanService.line_user_choose_style(event, style)
 
         return 'ok'

@@ -17,6 +17,98 @@ richmenu_1 = {
     },
     "selected": True,
     "name": "richmenu-1",
+            "chatBarText": "功能選單",
+            "areas": [
+                {
+                    "bounds": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 400,
+                        "height": 405
+                    },
+                    "action": {
+                        "type": "postback",
+                        "label": "item_rec",
+                        "data": "func=item_rec",
+                        "text": "商品推薦"
+                    }
+                },
+                {
+                    "bounds": {
+                        "x": 400,
+                        "y": 0,
+                        "width": 400,
+                        "height": 405
+                    },
+                    "action": {
+                        "type": "postback",
+                        "label": "風格選擇",
+                        "data": "action=next"
+                    }
+                },
+                {
+                    "bounds": {
+                        "x": 800,
+                        "y": 0,
+                        "width": 400,
+                        "height": 405
+                    },
+                    "action": {
+                        "type": "uri",
+                        "label": "Camera roll",
+                        "uri": "line://nv/cameraRoll/single"
+                    }
+                },
+                {
+                    "bounds": {
+                        "x": 0,
+                        "y": 405,
+                        "width": 400,
+                        "height": 405
+                    },
+                    "action": {
+                        "type": "uri",
+                        "label": "偏好設定",
+                        "uri": "https://liff.line.me/1656234315-bpJYQaV8"
+                    }
+                },
+                {
+                    "bounds": {
+                        "x": 400,
+                        "y": 405,
+                        "width": 400,
+                        "height": 405
+                    },
+                    "action": {
+                        "type": "postback",
+                        "label": "流行趨勢",
+                        "data": "fun=trend",
+                        "text": "流行趨勢"
+                    }
+                },
+                {
+                    "bounds": {
+                        "x": 800,
+                        "y": 405,
+                        "width": 400,
+                        "height": 405
+                    },
+                    "action": {
+                        "type": "uri",
+                        "label": "camera",
+                        "uri": "line://nv/camera"
+                    }
+                }
+    ]
+}
+
+richmenu_2 = {
+    "size": {
+        "width": 1200,
+        "height": 810
+    },
+    "selected": True,
+    "name": "richmenu-1",
             "chatBarText": "風格選擇",
             "areas": [
                 {
@@ -55,9 +147,9 @@ richmenu_1 = {
                         "height": 405
                     },
                     "action": {
-                        "type": "uri",
-                        "label": "Camera roll",
-                        "uri": "line://nv/cameraRoll/single"
+                        "type": "postback",
+                        "label": "真的美",
+                        "data": "feedback=good&action=prev"
                     }
                 },
                 {
@@ -96,99 +188,9 @@ richmenu_1 = {
                         "height": 405
                     },
                     "action": {
-                        "type": "uri",
-                        "label": "camera",
-                        "uri": "line://nv/camera"
-                    }
-                }
-    ]
-}
-
-richmenu_2 = {
-    "size": {
-        "width": 1200,
-        "height": 810
-    },
-    "selected": True,
-    "name": "richmenu-1",
-            "chatBarText": "風格選擇",
-            "areas": [
-                {
-                    "bounds": {
-                        "x": 0,
-                        "y": 0,
-                        "width": 400,
-                        "height": 405
-                    },
-                    "action": {
-                        "type": "message",
-                        "label": "文字",
-                        "text": "文字1!"
-                    }
-                },
-                {
-                    "bounds": {
-                        "x": 400,
-                        "y": 0,
-                        "width": 400,
-                        "height": 405
-                    },
-                    "action": {
-                        "type": "message",
-                        "label": "文字",
-                        "text": "文字2!"
-                    }
-                },
-                {
-                    "bounds": {
-                        "x": 800,
-                        "y": 0,
-                        "width": 400,
-                        "height": 405
-                    },
-                    "action": {
-                        "type": "message",
-                        "label": "文字",
-                        "text": "文字3!"
-                    }
-                },
-                {
-                    "bounds": {
-                        "x": 0,
-                        "y": 405,
-                        "width": 400,
-                        "height": 405
-                    },
-                    "action": {
-                        "type": "message",
-                        "label": "文字",
-                        "text": "文字4!"
-                    }
-                },
-                {
-                    "bounds": {
-                        "x": 400,
-                        "y": 405,
-                        "width": 400,
-                        "height": 405
-                    },
-                    "action": {
-                        "type": "message",
-                        "label": "文字",
-                        "text": "文字5!"
-                    }
-                },
-                {
-                    "bounds": {
-                        "x": 800,
-                        "y": 405,
-                        "width": 400,
-                        "height": 405
-                    },
-                    "action": {
-                        "type": "message",
-                        "label": "文字",
-                        "text": "文字6!"
+                        "type": "postback",
+                        "label": "饒了我",
+                        "data": "feedback=bad&action=prev"
                     }
                 }
     ]
@@ -234,22 +236,34 @@ class RichMenuService:
 line_bot_api = LineBotApi(config.get('LINE_CHANNEL_ACCESS_TOKEN'))
 # 讀取所有的圖文選單
 rich_menu_list = line_bot_api.get_rich_menu_list()
+# print(rich_menu_list[0].rich_menu_id)
+# print(rich_menu_list[1].rich_menu_id)
+# x = line_bot_api.get_default_rich_menu()
+# print(x)
 
 # 刪除圖文選單
 line_bot_api.delete_rich_menu(rich_menu_list[0].rich_menu_id)
+line_bot_api.delete_rich_menu(rich_menu_list[1].rich_menu_id)
 
 # 新增圖文選單
 RichMenuService.createRichMenu(richmenu_1)
+RichMenuService.createRichMenu(richmenu_2)
 
 #查詢新的圖文選單 
 rich_menu_list = line_bot_api.get_rich_menu_list()
 
 # 上傳圖穩選單照片
-RichMenuService.setRichMenuPicture(rich_menu_list[0].rich_menu_id, "richimage.png")
+RichMenuService.setRichMenuPicture(rich_menu_list[1].rich_menu_id, "圖文選單_p1.png")
+RichMenuService.setRichMenuPicture(rich_menu_list[0].rich_menu_id, "圖文選單_p2.png")
 
 # 設定預設圖文選單
-line_bot_api.set_default_rich_menu(rich_menu_list[0].rich_menu_id)
+line_bot_api.set_default_rich_menu(rich_menu_list[1].rich_menu_id)
 
-print("共有%d個圖文選單" % (len(rich_menu_list)),rich_menu_list[0].rich_menu_id)
+# 預設圖文選單id
+print("第一張",rich_menu_list[0].rich_menu_id)
+print("第二張",rich_menu_list[1].rich_menu_id)
+print("預設圖文",line_bot_api.get_default_rich_menu())
+
+# print("共有%d個圖文選單" % (len(rich_menu_list)),rich_menu_list[0].rich_menu_id, rich_menu_list[1].rich_menu_id)
 # for i in range(0, len(rich_menu_list)-1, 1):
 #     print("第%d個ID是: %s"% (i+1,rich_menu_list[i].rich_menu_id))

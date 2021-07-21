@@ -43,7 +43,7 @@ class GanService:
         
         cls.line_bot_api.push_message(event.source.user_id, TextSendMessage(text='妝容生成中...且慢!'))
         #Gan 模型套用 
-        os.system(f"python3 PSGAN-master/main.py --source_path {event.source.user_id}_cache.png --reference_dir model_style/{style}")
+        os.system(f"python3 PSGAN-master/main.py --source_path {event.source.user_id}_cache.png --reference_dir PSGAN-master/assets/model_style/{style}")
         os.rename(f"{event.source.user_id}_cache_psgan.png",f'{event.timestamp}_psgan_{style}.png')
         temp_gan_file_path = f'{event.timestamp}_psgan_{style}.png'
 
