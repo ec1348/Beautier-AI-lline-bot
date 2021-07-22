@@ -2,6 +2,8 @@
 This is a line bot make people more beautiful
 
 * 第一步: 打開GCP console terminal  
+執行 `sudo apt-get update -y`
+執行 `sudo apt-get install -y git-lfs`
 執行 `git clone https://github.com/ec1348/Beautier-AI-lline-bot.git`  
 案授權  
   
