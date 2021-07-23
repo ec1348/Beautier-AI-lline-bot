@@ -42,10 +42,15 @@ class GanService:
         blob.upload_from_filename(temp_gan_file_path)
 
         # 上傳至Imgur
-        import pyimgur
-        title = "Uploaded with PyImgur"
-        im = pyimgur.Imgur(config.get('IMGUR_CLIENT_ID'))
-        uploaded_image = im.upload_image(temp_gan_file_path, title=title)
+        try:
+            import pyimgur
+            title = "Uploaded with PyImgur"
+            im = pyimgur.Imgur(config.get('IMGUR_CLIENT_ID'))
+            uploaded_image = im.upload_image(temp_gan_file_path, title=title)
+        except:
+            cls.line_bot_api.push_message(event.source.user_id, TextSendMessage(text='imgur 壞掉了，再點選一次'))
+            os.remove(temp_gan_file_path)
+
 
         try:
             # 回覆變妝後的照片
