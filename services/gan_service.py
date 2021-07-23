@@ -26,24 +26,9 @@ class GanService:
         將照片存回雲端
         '''
         file_path = f'{event.source.user_id}_cache.png'
-        # 判斷使用者是否上傳照片
-        if  os.path.isfile(file_path):
-            print("User picture exits")
-            
-        else:
-            print("User picture does not exit")
-            cls.line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage("請上傳照片")
-                )
-            return 0
-
-
-
-        
         cls.line_bot_api.push_message(event.source.user_id, TextSendMessage(text='妝容生成中...且慢!'))
         #Gan 模型套用 
-        os.system(f"python3 PSGAN-master/main.py --source_path {event.source.user_id}_cache.png --reference_dir PSGAN-master/assets/model_style/{style}")
+        os.system(f"python3 PSGAN-master/main.py --source_path {file_path} --reference_dir PSGAN-master/assets/model_style/{style}")
         os.rename(f"{event.source.user_id}_cache_psgan.png",f'{event.timestamp}_psgan_{style}.png')
         temp_gan_file_path = f'{event.timestamp}_psgan_{style}.png'
 
@@ -66,11 +51,15 @@ class GanService:
             # 回覆變妝後的照片
             cls.line_bot_api.reply_message(
                 event.reply_token,
-                ImageSendMessage(
-                    original_content_url= uploaded_image.link, 
-                    preview_image_url= uploaded_image.link
-                    )
-                
+                [
+                    ImageSendMessage(
+                        original_content_url= uploaded_image.link, 
+                        preview_image_url= uploaded_image.link
+                        ),
+                    TextSendMessage(
+                        "請點選:真的美 or 饒了我，給予評價。並且返回上一頁。"
+                        )
+                ]
             )
         except:
             os.remove(temp_gan_file_path)

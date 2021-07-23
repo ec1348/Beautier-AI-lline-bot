@@ -30,7 +30,7 @@ richmenu_1 = {
                         "type": "postback",
                         "label": "item_rec",
                         "data": "func=item_rec",
-                        "text": "商品推薦"
+                        "text": "商品推薦(待開發)"
                     }
                 },
                 {
@@ -83,7 +83,7 @@ richmenu_1 = {
                         "type": "postback",
                         "label": "流行趨勢",
                         "data": "fun=trend",
-                        "text": "流行趨勢"
+                        "text": "流行趨勢(待開發)"
                     }
                 },
                 {
@@ -149,7 +149,8 @@ richmenu_2 = {
                     "action": {
                         "type": "postback",
                         "label": "真的美",
-                        "data": "feedback=good&action=prev"
+                        "data": "feedback=good&action=prev",
+                        "text": "我好漂亮"
                     }
                 },
                 {
@@ -190,7 +191,8 @@ richmenu_2 = {
                     "action": {
                         "type": "postback",
                         "label": "饒了我",
-                        "data": "feedback=bad&action=prev"
+                        "data": "feedback=bad&action=prev",
+                        "text": "饒了我吧，心美也是一種美。"
                     }
                 }
     ]
@@ -253,11 +255,11 @@ RichMenuService.createRichMenu(richmenu_2)
 rich_menu_list = line_bot_api.get_rich_menu_list()
 
 # 上傳圖穩選單照片
-RichMenuService.setRichMenuPicture(rich_menu_list[1].rich_menu_id, "圖文選單_p1.png")
-RichMenuService.setRichMenuPicture(rich_menu_list[0].rich_menu_id, "圖文選單_p2.png")
+RichMenuService.setRichMenuPicture(rich_menu_list[0].rich_menu_id, "圖文選單_p1.png")
+RichMenuService.setRichMenuPicture(rich_menu_list[1].rich_menu_id, "圖文選單_p2.png")
 
 # 設定預設圖文選單
-line_bot_api.set_default_rich_menu(rich_menu_list[1].rich_menu_id)
+line_bot_api.set_default_rich_menu(rich_menu_list[0].rich_menu_id)
 
 # 預設圖文選單id
 print("第一張",rich_menu_list[0].rich_menu_id)

@@ -56,7 +56,7 @@ class LineBotController:
         # 擷取功能
         if query_string_dict.get('action'):
             if query_string_dict.get('action')[0] == 'next':
-                print("dam same")
+                print("next page")
                 richMenuService.click_next(event)
             else:
                 print("go back")                
