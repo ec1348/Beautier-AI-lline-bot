@@ -18,12 +18,12 @@ RUN apt-get install -y python3-pip
 RUN pip3 install pip --upgrade
 # install pytorch torchvision dlib
 RUN pip3 install torch==1.5.0+cpu torchvision==0.6.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
-RUN mkdir -p PSGAN-master/dlib
 RUN apt-get install -y git
+RUN mkdir -p PSGAN-master/dlib
 RUN git clone https://github.com/davisking/dlib.git PSGAN-master/dlib/
-# RUN cd PSGAN-master/dlib
-RUN python3 PSGAN-master/dlib/setup.py install
-RUN cd ../../
+RUN cd PSGAN-master/dlib/ \
+    python3 setup.py install
+    # cd ../../
 
 
 # Install production dependencies.
