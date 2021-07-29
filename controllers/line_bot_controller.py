@@ -17,6 +17,8 @@ from services.image_service import ImageService
 from services.user_service import UserService
 from services.gan_service import GanService
 from services.rich_menu_service import richMenuService
+from services.trend_service import TrendService
+from services.item_service import ItemService
 
 from urllib.parse import parse_qs
 
@@ -58,12 +60,24 @@ class LineBotController:
             if query_string_dict.get('action')[0] == 'next':
                 print("next page")
                 richMenuService.click_next(event)
+            elif query_string_dict.get('action')[0] == 'third_menu':
+                print("third page")
+                richMenuService.click_third(event)
+            elif query_string_dict.get('action')[0] == 'forth_menu':
+                print("forth page")
+                richMenuService.click_forth(event)
             else:
                 print("go back")                
                 richMenuService.click_prev(event)
         elif query_string_dict.get('style'):
             style = query_string_dict.get('style')[0]
-            # Postbakc function 功能對應轉發
+            # Postback function 功能對應轉發
             GanService.line_user_choose_style(event, style)
+        elif query_string_dict.get('trend'):
+            style = query_string_dict.get('trend')[0]
+            TrendService.line_user_choose_style(event, style)
+        elif query_string_dict.get('item'):
+            style = query_string_dict.get('item')[0]
+            ItemService.line_user_choose_style(event, style)
 
         return 'ok'
