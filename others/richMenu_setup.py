@@ -409,9 +409,9 @@ rich_menu_list = line_bot_api.get_rich_menu_list()
 # print(x)
 
 # 刪除圖文選單
-# line_bot_api.delete_rich_menu(rich_menu_list[0].rich_menu_id)
+# line_bot_api.delete_rich_menu("richmenu-4d278ce8b4884ce5f40f1ad13c4eb960")
 # line_bot_api.delete_rich_menu(rich_menu_list[1].rich_menu_id)
-line_bot_api.delete_rich_menu(rich_menu_list[2].rich_menu_id)
+# line_bot_api.delete_rich_menu(rich_menu_list[2].rich_menu_id)
 
 # # 新增圖文選單
 # RichMenuService.createRichMenu(richmenu_1)
@@ -422,6 +422,7 @@ line_bot_api.delete_rich_menu(rich_menu_list[2].rich_menu_id)
 # #查詢新的圖文選單 
 rich_menu_list = line_bot_api.get_rich_menu_list()
 print(len(rich_menu_list))
+print(rich_menu_list)
 
 # 上傳圖穩選單照片
 # RichMenuService.setRichMenuPicture(rich_menu_list[1].rich_menu_id, "圖文選單_p1.png")
